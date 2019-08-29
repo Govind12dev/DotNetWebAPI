@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Results;
 using WebAPI.Controllers;
 using WebAPI.Models;
+using WebAPI.Models.UIModels;
 
 namespace WebAPI.Tests
 {
@@ -39,7 +40,7 @@ namespace WebAPI.Tests
         [Test]
         public void PostProject()
         {
-            var mockProject = new Project();
+            var mockProject = new ProjectModel();
             mockProject.ProjectName = "Test Case Project1";
             mockProject.Priority = 5;
             mockProject.StartDate = DateTime.Now;

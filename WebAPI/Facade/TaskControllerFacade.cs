@@ -43,8 +43,8 @@ namespace WebAPI.Facade
                     var project = db.Projects.Where(p => p.ProjectID == d.ProjectID).ToList();
                     var IsParentTask = parentTask.Count > 0;
 
-                    t.ProjectID = project[0].ProjectID;
-                    t.ProjectName = project[0].ProjectName;
+                    t.ProjectID = project.Count>0? project[0].ProjectID : default(int);
+                    t.ProjectName = project.Count > 0 ? project[0].ProjectName : string.Empty;
                     t.TaskID = d.TaskID;
                     t.TaskName = d.TaskName;
                     t.IsParentTask = IsParentTask;

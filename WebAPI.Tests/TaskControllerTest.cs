@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
 using WebAPI.Controllers;
+using WebAPI.Models.UIModels;
 
 namespace WebAPI.Tests
 {
@@ -39,7 +40,7 @@ namespace WebAPI.Tests
         [Test]
         public void PostTask_Test()
         {
-            var mockProject = new Models.Task();
+            var mockProject = new TaskModel();
             mockProject.TaskName = "Test Case Task1";
             mockProject.Priority = 5;
             mockProject.StartDate = DateTime.Now;
@@ -81,8 +82,8 @@ namespace WebAPI.Tests
         public void PutTaks_Test()
         {
             int id1 = default(int);
-            var updateTask1 = new Models.Task();
-            var updateTask2 = new Models.Task();
+            var updateTask1 = new TaskModel();
+            var updateTask2 = new TaskModel();
 
             updateTask2.TaskID = 1789;
             updateTask2.TaskName = "Update test project";
