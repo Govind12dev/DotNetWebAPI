@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeID" />
@@ -15,14 +15,12 @@
           <Property Name="Mobile" Type="varchar" MaxLength="50" />
           <Property Name="Position" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ProjectManager.dbo.ParentTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ParentTask">
+        <EntityType Name="ParentTasks">
           <Key>
             <PropertyRef Name="ParentID" />
           </Key>
-          <Property Name="ParentID" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="ParentTask" Type="nvarchar" MaxLength="200" />
+          <Property Name="ParentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentTaskName" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -40,11 +38,11 @@ warning 6002: The table/view 'ProjectManager.dbo.ParentTask' does not have a pri
           </Key>
           <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParentID" Type="int" />
-          <Property Name="ProjectID" Type="int" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
           <Property Name="TaskName" Type="nvarchar" MaxLength="200" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
-          <Property Name="Priority" Type="int" />
+          <Property Name="Priority" Type="int" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Users">
@@ -60,18 +58,12 @@ warning 6002: The table/view 'ProjectManager.dbo.ParentTask' does not have a pri
         </EntityType>
         <EntityContainer Name="DBModelStoreContainer">
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParentTasks" EntityType="Self.ParentTasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ParentTask" EntityType="Self.ParentTask" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ParentTask].[ParentID] AS [ParentID], 
-    [ParentTask].[ParentTask] AS [ParentTask]
-    FROM [dbo].[ParentTask] AS [ParentTask]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -101,11 +93,11 @@ warning 6002: The table/view 'ProjectManager.dbo.ParentTask' does not have a pri
           </Key>
           <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParentID" Type="Int32" />
-          <Property Name="ProjectID" Type="Int32" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
           <Property Name="TaskName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
-          <Property Name="Priority" Type="Int32" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
@@ -119,20 +111,20 @@ warning 6002: The table/view 'ProjectManager.dbo.ParentTask' does not have a pri
           <Property Name="ProjectID" Type="Int32" />
           <Property Name="TaskID" Type="Int32" />
         </EntityType>
-        <EntityType Name="ParentTask">
-          <Key>
-            <PropertyRef Name="ParentID" />
-          </Key>
-          <Property Name="ParentID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ParentTask1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="Tasks" EntityType="Self.Task" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="ParentTasks" EntityType="Self.ParentTask" />
+          <EntitySet Name="ParentTasks" EntityType="DBModel.ParentTask" />
         </EntityContainer>
+        <EntityType Name="ParentTask">
+          <Key>
+            <PropertyRef Name="ParentID" />
+          </Key>
+          <Property Name="ParentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentTaskName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -189,9 +181,9 @@ warning 6002: The table/view 'ProjectManager.dbo.ParentTask' does not have a pri
           </EntitySetMapping>
           <EntitySetMapping Name="ParentTasks">
             <EntityTypeMapping TypeName="DBModel.ParentTask">
-              <MappingFragment StoreEntitySet="ParentTask">
+              <MappingFragment StoreEntitySet="ParentTasks">
+                <ScalarProperty Name="ParentTaskName" ColumnName="ParentTaskName" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="ParentTask1" ColumnName="ParentTask" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

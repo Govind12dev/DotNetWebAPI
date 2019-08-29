@@ -49,10 +49,7 @@ namespace WebAPI.Controllers
             }
 
             db.Entry(user).State = EntityState.Modified;
-
-
             db.SaveChanges();
-
 
             return StatusCode(HttpStatusCode.NoContent);
         }

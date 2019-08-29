@@ -14,7 +14,7 @@ namespace WebAPI.Models
     
     public partial class ParentTask
     {
-        public string ParentID { get; set; }
-        public string ParentTask1 { get; set; }
+        public int ParentID { get; set; }
+        public string ParentTaskName { get; set; }
     }
 }

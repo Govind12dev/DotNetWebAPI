@@ -8,7 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebAPI.Facade;
 using WebAPI.Models;
+using WebAPI.Models.UIModels;
 
 namespace WebAPI.Controllers
 {
@@ -16,10 +18,14 @@ namespace WebAPI.Controllers
     {
         private DBEntities db = new DBEntities();
 
+        private ProjectControllerFacade pm = new ProjectControllerFacade();
+        private UserController uc = new UserController();
+
         // GET: api/Project
-        public IQueryable<Project> GetProjects()
+        public IEnumerable<ProjectModel> GetProjects()
         {
-            return db.Projects;
+            var abc = pm.ReverseMap(db.Projects);
+            return abc;
         }
 
         // GET: api/Project/5
@@ -50,20 +56,20 @@ namespace WebAPI.Controllers
             }
 
             db.Entry(project).State = EntityState.Modified;
-
             db.SaveChanges();
-
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Project
-        [ResponseType(typeof(Project))]
-        public IHttpActionResult PostProject(Project project)
+        //[ResponseType(typeof(ProjectModel))]
+        public IHttpActionResult PostProject(ProjectModel projectModel)
         {
-
+            var project = pm.Map(projectModel);
             db.Projects.Add(project);
             db.SaveChanges();
+
+            pm.UpdateUser(projectModel.UserID, project.ProjectID);
 
             return CreatedAtRoute("DefaultApi", new { id = project.ProjectID }, project);
         }
@@ -82,8 +88,8 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-
-            db.Projects.Remove(project);
+            project.Priority = default(int);//Consider suspended with 0 priority
+            db.Entry(project).State = EntityState.Modified;
             db.SaveChanges();
 
             return Ok(project);

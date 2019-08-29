@@ -8,7 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebAPI.Facade;
 using WebAPI.Models;
+using WebAPI.Models.UIModels;
 
 namespace WebAPI.Controllers
 {
@@ -16,30 +18,33 @@ namespace WebAPI.Controllers
     {
         private DBEntities db = new DBEntities();
 
+        private TaskControllerFacade tm = new TaskControllerFacade();
+
         // GET: api/Task
-        public IQueryable<Task> GetTasks()
+        public IEnumerable<TaskModel> GetTasks()
         {
-            return db.Tasks;
+            var abc = tm.ReverseMap(db.Tasks);
+            return abc;
         }
 
-        // GET: api/Task/5
-        [ResponseType(typeof(Task))]
+        // GET: api/Task/5     
+        [ResponseType(typeof(TaskModel))]
         public IHttpActionResult GetTask(int id)
         {
-            Task task = db.Tasks.Find(id);
-            if (task == null)
+            var tasks = db.Tasks.Where(t => t.ProjectID == id);
+            var taskModel = tm.ReverseMap(tasks);
+            if (tasks == null)
             {
-                return NotFound();
+                return null;
             }
-
-            return Ok(task);
+            return Ok(taskModel);
         }
 
         // PUT: api/Task/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTask(int id, Task task)
+        public IHttpActionResult PutTask(int id, TaskModel taskModel)
         {
-            if (id != task.TaskID)
+            if (id != taskModel.TaskID)
             {
                 return BadRequest();
             }
@@ -48,23 +53,33 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            db.Entry(task).State = EntityState.Modified;
-
-
-            db.SaveChanges();
-
-            return StatusCode(HttpStatusCode.NoContent);
+            if (!string.IsNullOrEmpty(taskModel.ParentTask))
+            {
+                tm.UpdateParentTask(taskModel);
+            }
+            return StatusCode(HttpStatusCode.OK);
         }
 
         // POST: api/Task
         [ResponseType(typeof(Task))]
-        public IHttpActionResult PostTask(Task task)
+        public IHttpActionResult PostTask(TaskModel taskModel)
         {
-            db.Tasks.Add(task);
+            if (taskModel.IsParentTask)
+            {
+                tm.CreateParentTask(taskModel.TaskName);
+                return StatusCode(HttpStatusCode.OK);
+            }
+            else
+            {
+                var task = tm.Map(taskModel);
+                //Add Task Record
+                db.Tasks.Add(task);
+                db.SaveChanges();
+                //Update User Record
+                tm.UpdateUser(task.TaskID, taskModel.ProjectID, taskModel.UserID);
+                return CreatedAtRoute("DefaultApi", new { id = task.TaskID }, task);
+            }
 
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = task.TaskID }, task);
         }
 
         // DELETE: api/Task/5
@@ -77,8 +92,11 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            db.Tasks.Remove(task);
+            //db.Tasks.Remove(task);
+            task.Status = "Completed";
+            db.Entry(task).State = EntityState.Modified;
             db.SaveChanges();
+
 
             return Ok(task);
         }
