@@ -12,7 +12,7 @@ namespace WebAPI.Facade
     public class ProjectControllerFacade
     {
         DBEntities db = new DBEntities();
-        UserController userController = new UserController();
+        UserController uc = new UserController();
         public Project Map(ProjectModel projectModel)
         {
             var project = new Project();
