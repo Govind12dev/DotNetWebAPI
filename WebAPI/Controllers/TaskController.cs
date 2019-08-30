@@ -31,12 +31,12 @@ namespace WebAPI.Controllers
         [ResponseType(typeof(TaskModel))]
         public IHttpActionResult GetTask(int id)
         {
-            var tasks = db.Tasks.Where(t => t.ProjectID == id);
-            var taskModel = tm.ReverseMap(tasks);
-            if (tasks == null)
+            var tasks = db.Tasks.Where(t => t.ProjectID == id).ToList();
+            if (tasks.Count == 0)
             {
                 return null;
             }
+            var taskModel = tm.ReverseMap(tasks);           
             return Ok(taskModel);
         }
 

@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WebAPI.Areas.HelpPage
 {
     /// <summary>
     /// This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class ImageSample
     {
         /// <summary>

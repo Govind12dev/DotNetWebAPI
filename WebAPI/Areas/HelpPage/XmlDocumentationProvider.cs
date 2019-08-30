@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -12,6 +13,7 @@ namespace WebAPI.Areas.HelpPage
     /// <summary>
     /// A custom <see cref="IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class XmlDocumentationProvider : IDocumentationProvider, IModelDocumentationProvider
     {
         private XPathNavigator _documentNavigator;

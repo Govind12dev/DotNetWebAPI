@@ -16,6 +16,7 @@ using WebAPI.Areas.HelpPage.Models;
 
 namespace WebAPI.Areas.HelpPage
 {
+    [ExcludeFromCodeCoverage]
     public static class HelpPageConfigurationExtensions
     {
         private const string ApiModelPrefix = "MS_HelpPageApiModel_";

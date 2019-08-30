@@ -23,6 +23,7 @@ namespace WebAPI.Areas.HelpPage
     /// For example you can set a custom <see cref="System.Web.Http.Description.IDocumentationProvider"/> to supply the documentation
     /// or you can provide the samples for the requests/responses.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class HelpPageConfig
     {
         [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters",

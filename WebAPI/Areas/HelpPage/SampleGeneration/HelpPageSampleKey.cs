@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 
 namespace WebAPI.Areas.HelpPage
@@ -8,6 +9,7 @@ namespace WebAPI.Areas.HelpPage
     /// <summary>
     /// This is used to identify the place where the sample should be applied.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class HelpPageSampleKey
     {
         /// <summary>

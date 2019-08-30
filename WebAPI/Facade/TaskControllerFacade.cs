@@ -85,8 +85,10 @@ namespace WebAPI.Facade
 
             var parentID = parentTask.ParentID;
 
-            taskModel.ParentTaskID = parentID;
-            db.Entry(taskModel).State = EntityState.Modified;
+            var task = Map(taskModel);
+
+            task.ParentID = parentID;
+            db.Entry(task).State = EntityState.Modified;
             db.SaveChanges();
         }
 

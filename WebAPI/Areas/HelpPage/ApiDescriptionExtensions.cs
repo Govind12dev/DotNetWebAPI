@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
 namespace WebAPI.Areas.HelpPage
 {
+    [ExcludeFromCodeCoverage]
     public static class ApiDescriptionExtensions
     {
         /// <summary>
@@ -12,6 +14,7 @@ namespace WebAPI.Areas.HelpPage
         /// </summary>
         /// <param name="description">The <see cref="ApiDescription"/>.</param>
         /// <returns>The ID as a string.</returns>
+        [ExcludeFromCodeCoverage]
         public static string GetFriendlyId(this ApiDescription description)
         {
             string path = description.RelativePath;

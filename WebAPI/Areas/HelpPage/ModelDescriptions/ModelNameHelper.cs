@@ -1,13 +1,16 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
 namespace WebAPI.Areas.HelpPage.ModelDescriptions
 {
+    [ExcludeFromCodeCoverage]
     internal static class ModelNameHelper
     {
         // Modify this to provide custom model name mapping.
+        [ExcludeFromCodeCoverage]
         public static string GetModelName(Type type)
         {
             ModelNameAttribute modelNameAttribute = type.GetCustomAttribute<ModelNameAttribute>();

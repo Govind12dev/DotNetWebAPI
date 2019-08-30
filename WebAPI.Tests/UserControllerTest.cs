@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using NBench;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace WebAPI.Tests
     {
         UserController userController = new UserController();
 
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void GetUsers_Test()
         {
@@ -23,6 +27,9 @@ namespace WebAPI.Tests
 
         }
 
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void GetUser_Test()
         {
@@ -35,7 +42,9 @@ namespace WebAPI.Tests
 
         }
 
-
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void PostUser_Test()
         {
@@ -48,7 +57,9 @@ namespace WebAPI.Tests
             Assert.IsNotNull(actionResult);
         }
 
-
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void DeleteUser_Test()
         {
@@ -78,6 +89,9 @@ namespace WebAPI.Tests
             Assert.IsInstanceOf<NotFoundResult>(actionResult3);
         }
 
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void PutUser_Test()
         {

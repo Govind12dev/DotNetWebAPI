@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -16,6 +17,7 @@ namespace WebAPI.Areas.HelpPage.ModelDescriptions
     /// <summary>
     /// Generates model descriptions for given types.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class ModelDescriptionGenerator
     {
         // Modify this to support more data annotation attributes.

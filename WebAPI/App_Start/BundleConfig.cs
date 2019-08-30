@@ -1,11 +1,14 @@
-﻿using System.Web;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Web;
 using System.Web.Optimization;
 
 namespace WebAPI
 {
+    [ExcludeFromCodeCoverage]
     public class BundleConfig
     {
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
+        [ExcludeFromCodeCoverage]
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

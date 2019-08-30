@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Web.Http;
 using System.Web.Mvc;
 
 namespace WebAPI.Areas.HelpPage
 {
+    [ExcludeFromCodeCoverage]
     public class HelpPageAreaRegistration : AreaRegistration
     {
         public override string AreaName

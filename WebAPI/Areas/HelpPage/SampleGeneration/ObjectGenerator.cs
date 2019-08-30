@@ -11,6 +11,7 @@ namespace WebAPI.Areas.HelpPage
     /// <summary>
     /// This class will create an object of a given type and populate it with sample data.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class ObjectGenerator
     {
         internal const int DefaultCollectionSize = 2;

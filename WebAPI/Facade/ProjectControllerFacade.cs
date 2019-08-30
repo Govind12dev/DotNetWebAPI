@@ -37,7 +37,9 @@ namespace WebAPI.Facade
                     var p = new ProjectModel();
                     var user = db.Users.Where(u => u.ProjectID == d.ProjectID).ToList();
                     var task = db.Tasks.Where(t => t.ProjectID == d.ProjectID).ToList();
-                    var status = task.Any(t => t.Status == "Completed") ? task.Count(t => t.Status.Contains("Completed")).ToString() : "0";
+                    var taskhasProject = task.Where(t => t.Status != null);
+
+                    var status = taskhasProject.Any(t => t.Status == "Completed") ? taskhasProject.Count(t => t.Status.Contains("Completed")).ToString() : "0";
                     p.ProjectID = d.ProjectID;
                     p.ProjectName = d.ProjectName;
                     p.StartDate = d.StartDate;

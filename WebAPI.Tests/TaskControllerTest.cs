@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using NBench;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,12 @@ namespace WebAPI.Tests
     public class TaskControllerTest
     {
         TaskController taskController = new TaskController();
+        ProjectController pc = new ProjectController();
+        UserController uc = new UserController();
 
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void GetTasks_Test()
         {
@@ -24,19 +30,30 @@ namespace WebAPI.Tests
 
         }
 
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void GetTask_Test()
         {
-            int taskId1 = 12;
-            var actionResult1 = taskController.GetTask(taskId1);
+            var projectID = default(int);
+            var tasks = taskController.GetTasks();
+            foreach (var task in tasks)
+            {
+                projectID = task.ProjectID;
+                break;
+            }
+            var actionResult1 = taskController.GetTask(projectID);
             Assert.IsNotNull(actionResult1);
-            int taskId2 = 880;
-            var actionResult2 = taskController.GetTask(taskId2);
-            Assert.IsNotNull(actionResult2);
+            int projectID2 = 81080;
+            var actionResult2 = taskController.GetTask(projectID2);
+            Assert.IsNull(actionResult2);
 
         }
 
-
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void PostTask_Test()
         {
@@ -51,20 +68,57 @@ namespace WebAPI.Tests
             Assert.IsNotNull(actionResult);
         }
 
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [Test]
+        public void PostTask_IsNotParentTask_Test()
+        {
+            var mockProject = new TaskModel();
+            mockProject.TaskName = "Test Case Task1";
+            mockProject.Priority = 5;
+            mockProject.StartDate = DateTime.Now;
+            mockProject.EndDate = DateTime.Now.AddDays(30);
+            mockProject.Status = "Completed";
+            mockProject.IsParentTask = false;
 
+            var projects = pc.GetProjects();
+            var users = uc.GetUsers();
+            foreach (var project in projects)
+            {
+                mockProject.ProjectID = project.ProjectID;
+                mockProject.ProjectName = project.ProjectName;
+                break;
+            }
+
+            foreach (var user in users)
+            {
+                mockProject.UserID = user.UserID;
+                break;
+            }
+
+            var actionResult = taskController.PostTask(mockProject);
+            Assert.IsNotNull(actionResult);
+        }
+
+
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void DeleteTask_Test()
         {
             int id1 = 5;
-            int id2 = default(int);
+            int projectID = default(int);
             var actionResult1 = taskController.DeleteTask(id1);
 
             var tasks = taskController.GetTasks();
             foreach (var task in tasks)
             {
-                id2 = task.TaskID;
+                projectID = task.ProjectID;
+                break;
             }
-            var actionResult2 = taskController.GetTask(id2);
+            var actionResult2 = taskController.GetTask(projectID);
             Assert.IsNotNull(actionResult2);
 
             if (actionResult1 == null)
@@ -78,6 +132,9 @@ namespace WebAPI.Tests
 
         }
 
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
         [Test]
         public void PutTaks_Test()
         {
@@ -107,6 +164,40 @@ namespace WebAPI.Tests
             Assert.IsNotNull(actionResult1);
             Assert.IsInstanceOf<BadRequestResult>(actionResult2);
             Assert.IsInstanceOf<NotFoundResult>(actionResult3);
+        }
+
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [Test]
+        public void UpdateParentTask_Test()
+        {            
+            var updateTask1 = new TaskModel();
+
+            var tasks = taskController.GetTasks();
+            foreach (var task in tasks)
+            {
+                updateTask1.TaskID = task.TaskID;
+                updateTask1.TaskName = "Update test project";
+                updateTask1.StartDate = DateTime.Now;
+                updateTask1.EndDate = DateTime.Now.AddDays(35);
+                updateTask1.Priority = 60;
+                updateTask1.ParentTask = "Parent Test task";
+                break;
+            }
+            var actionResult1 = taskController.PutTask(updateTask1.TaskID, updateTask1);                       
+            Assert.IsNotNull(actionResult1);           
+        }
+
+        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
+        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [Test]
+        public void GetTask_ReturnNullTask()
+        {
+            var projectID = 123456;
+            var tasks = taskController.GetTask(projectID);            
+            Assert.IsNull(tasks);
         }
     }
 }
