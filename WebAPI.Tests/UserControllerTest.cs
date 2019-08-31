@@ -15,9 +15,9 @@ namespace WebAPI.Tests
     {
         UserController userController = new UserController();
 
-        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]
-        
+        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, 
+            TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]        
         [Test]
         public void GetUsers_Test()
         {
@@ -29,8 +29,7 @@ namespace WebAPI.Tests
         
 
         [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]
-        
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]        
         [Test]
         public void GetUser_Test()
         {
@@ -44,8 +43,7 @@ namespace WebAPI.Tests
         }
 
         [PerfBenchmark(NumberOfIterations = 20, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 10000)]
-        
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 15000)]        
         [Test]
         public void PostUser_Test()
         {
@@ -59,8 +57,7 @@ namespace WebAPI.Tests
         }
 
         [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds =15000)]
-        
+        [ElapsedTimeAssertion(MaxTimeMilliseconds =20000)]        
         [Test]
         public void DeleteUser_Test()
         {
@@ -91,8 +88,7 @@ namespace WebAPI.Tests
         }
 
         [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 10000)]
-        
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 15000)]        
         [Test]
         public void PutUser_Test()
         {

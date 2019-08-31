@@ -17,19 +17,11 @@ namespace WebAPI.Tests
         TaskController taskController = new TaskController();
         ProjectController pc = new ProjectController();
         UserController uc = new UserController();
-        private Counter _counter;
+        
 
-
-        [PerfSetup]
-        public void Setup(BenchmarkContext context)
-        {
-            _counter = context.GetCounter("TestCounter");
-        }
-
-        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]
-        [CounterThroughputAssertion("TestCounter", MustBe.GreaterThan, 100000000.0d)]
-
+        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test
+            , SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]        
         [Test]
         public void GetTasks_Test()
         {
@@ -39,10 +31,8 @@ namespace WebAPI.Tests
 
         }
 
-        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [CounterThroughputAssertion("TestCounter", MustBe.GreaterThan, 100000000.0d)]
-
+        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]  
         [Test]
         public void GetTask_Test()
         {
@@ -61,10 +51,8 @@ namespace WebAPI.Tests
 
         }
 
-        [PerfBenchmark(NumberOfIterations = 20, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 20000)]
-        [CounterThroughputAssertion("TestCounter", MustBe.GreaterThan, 100000000.0d)]
-
+        [PerfBenchmark(NumberOfIterations = 20, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 25000)]        
         [Test]
         public void PostTask_Test()
         {
@@ -79,10 +67,8 @@ namespace WebAPI.Tests
             Assert.IsNotNull(actionResult);
         }
 
-        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 10000)]
-        [CounterThroughputAssertion("TestCounter", MustBe.GreaterThan, 100000000.0d)]
-
+        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 15000)]        
         [Test]
         public void PostTask_IsNotParentTask_Test()
         {
@@ -114,10 +100,8 @@ namespace WebAPI.Tests
         }
 
 
-        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 20000)]
-        [CounterThroughputAssertion("TestCounter", MustBe.GreaterThan, 100000000.0d)]
-
+        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 25000)]
         [Test]
         public void DeleteTask_Test()
         {
@@ -146,9 +130,8 @@ namespace WebAPI.Tests
         }
 
 
-        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 20000)]
-        [CounterThroughputAssertion("TestCounter", MustBe.GreaterThan, 100000000.0d)]
+        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 25000)]        
         [Test]
         public void PutTaks_Test()
         {
@@ -178,13 +161,11 @@ namespace WebAPI.Tests
             Assert.IsNotNull(actionResult1);
             Assert.IsInstanceOf<BadRequestResult>(actionResult2);
             Assert.IsInstanceOf<NotFoundResult>(actionResult3);
-        }        
-        
+        } 
         [Test]
         public void UpdateParentTask_Test()
         {            
             var updateTask1 = new TaskModel();
-
             var tasks = taskController.GetTasks();
             foreach (var task in tasks)
             {
@@ -200,9 +181,8 @@ namespace WebAPI.Tests
             Assert.IsNotNull(actionResult1);           
         }
 
-        [PerfBenchmark(NumberOfIterations =20, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 10000)]
-        [CounterThroughputAssertion("TestCounter", MustBe.GreaterThan, 100000000.0d)]
+        [PerfBenchmark(NumberOfIterations =20, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 20000)]        
         [Test]
         public void GetTask_ReturnNullTask()
         {

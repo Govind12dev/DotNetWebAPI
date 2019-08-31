@@ -19,8 +19,8 @@ namespace WebAPI.Tests
         UserController uc = new UserController();
 
         [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput,
-          TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]        
+          TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]        
         [Test]
         public void GetProjects_Test()
         {
@@ -30,9 +30,8 @@ namespace WebAPI.Tests
         }
 
 
-        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        
+        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]        
         [Test]
         public void GetProject_Test()
         {
@@ -45,9 +44,8 @@ namespace WebAPI.Tests
 
         }
 
-        [PerfBenchmark(NumberOfIterations = 20, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 10000)]
-        
+        [PerfBenchmark(NumberOfIterations = 20, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 15000)]        
         [Test]
         public void PostProject()
         {
@@ -66,9 +64,7 @@ namespace WebAPI.Tests
 
             var actionResult = projectController.PostProject(mockProject);
             Assert.IsNotNull(actionResult);
-        }
-
-                
+        }                
         [Test]
         public void DeleteProject_Test()
         {
@@ -95,9 +91,8 @@ namespace WebAPI.Tests
             }
         }
 
-        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 20000)]
-        
+        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 25000)]        
         [Test]
         public void PutProject_Test()
         {
