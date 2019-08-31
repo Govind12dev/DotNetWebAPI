@@ -17,3 +17,5 @@ Update-Package Microsoft.AspNet.WebApi -reinstall
 Install-Package Microsoft.AspNet.WebApi.Core //Test File Issue 
 Install-Package Microsoft.AspNet.WebApi.Client -Version 5.2.7 
 dotnet add package System.Web.Http.Common --version 4.0.20126.16343
+
+C:\ProjectManager\WebAPI\packages\NBench.Runner.1.2.2\tools\net452>NBench.Runner.exe C:\ProjectManager\WebAPI\WebAPI\bin\WebAPI.dll --output C:\ProjectManager\WebAPI
