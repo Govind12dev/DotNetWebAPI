@@ -13,6 +13,11 @@ namespace WebAPI.Facade
     {
         DBEntities db = new DBEntities();
         UserController uc = new UserController();
+        /// <summary>
+        /// Transform UI model to entity
+        /// </summary>
+        /// <param name="projectModel"></param>
+        /// <returns></returns>
         public Project Map(ProjectModel projectModel)
         {
             var project = new Project();
