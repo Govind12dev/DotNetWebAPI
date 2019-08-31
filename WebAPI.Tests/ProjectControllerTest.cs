@@ -18,9 +18,9 @@ namespace WebAPI.Tests
         ProjectController projectController = new ProjectController();
         UserController uc = new UserController();
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput,TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput,
+          TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]        
         [Test]
         public void GetProjects_Test()
         {
@@ -30,9 +30,9 @@ namespace WebAPI.Tests
         }
 
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
+        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
         [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        
         [Test]
         public void GetProject_Test()
         {
@@ -45,9 +45,9 @@ namespace WebAPI.Tests
 
         }
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [PerfBenchmark(NumberOfIterations = 20, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 10000)]
+        
         [Test]
         public void PostProject()
         {
@@ -68,9 +68,7 @@ namespace WebAPI.Tests
             Assert.IsNotNull(actionResult);
         }
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+                
         [Test]
         public void DeleteProject_Test()
         {
@@ -97,9 +95,9 @@ namespace WebAPI.Tests
             }
         }
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 20000)]
+        
         [Test]
         public void PutProject_Test()
         {
@@ -107,7 +105,7 @@ namespace WebAPI.Tests
             var updateProject = new Project();
             var updateProject1 = new Project();
 
-            updateProject1.ProjectID = 1789;
+            updateProject1.ProjectID = 1078900;
             updateProject1.ProjectName = "Update test project";
             updateProject1.StartDate = DateTime.Now;
             updateProject1.EndDate = DateTime.Now.AddDays(35);

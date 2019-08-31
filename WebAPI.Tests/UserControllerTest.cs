@@ -15,9 +15,9 @@ namespace WebAPI.Tests
     {
         UserController userController = new UserController();
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]
+        
         [Test]
         public void GetUsers_Test()
         {
@@ -26,25 +26,26 @@ namespace WebAPI.Tests
             Assert.IsTrue(users.Count() > 0);
 
         }
+        
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [PerfBenchmark(NumberOfIterations = 50, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 6000)]
+        
         [Test]
         public void GetUser_Test()
         {
             int taskId1 = 12;
             var actionResult1 = userController.GetUser(taskId1);
             Assert.IsNotNull(actionResult1);
-            int taskId2 = 880;
+            int taskId2 = 889800;
             var actionResult2 = userController.GetUser(taskId2);
             Assert.IsNotNull(actionResult2);
 
         }
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [PerfBenchmark(NumberOfIterations = 20, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 10000)]
+        
         [Test]
         public void PostUser_Test()
         {
@@ -57,9 +58,9 @@ namespace WebAPI.Tests
             Assert.IsNotNull(actionResult);
         }
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds =15000)]
+        
         [Test]
         public void DeleteUser_Test()
         {
@@ -89,9 +90,9 @@ namespace WebAPI.Tests
             Assert.IsInstanceOf<NotFoundResult>(actionResult3);
         }
 
-        [PerfBenchmark(NumberOfIterations = 500, RunMode = RunMode.Throughput, TestMode = TestMode.Test, SkipWarmups = true)]
-        [ElapsedTimeAssertion(MaxTimeMilliseconds = 5000)]
-        [MemoryAssertion(MemoryMetric.TotalBytesAllocated, MustBe.LessThanOrEqualTo, ByteConstants.SixtyFourKb)]
+        [PerfBenchmark(NumberOfIterations = 10, RunMode = RunMode.Throughput, TestMode = TestMode.Test)]
+        [ElapsedTimeAssertion(MaxTimeMilliseconds = 10000)]
+        
         [Test]
         public void PutUser_Test()
         {
@@ -99,7 +100,7 @@ namespace WebAPI.Tests
             var updateUser1 = new Models.User();
             var updateUser2 = new Models.User();
 
-            updateUser2.UserID = 1789;
+            updateUser2.UserID = 778900;
             updateUser2.FirstName = "Update test project";
             updateUser2.LastName = "Last";
             updateUser2.EmployeeID = 73;
