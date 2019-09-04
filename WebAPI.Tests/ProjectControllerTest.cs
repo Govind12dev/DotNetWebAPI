@@ -97,8 +97,8 @@ namespace WebAPI.Tests
         public void PutProject_Test()
         {
             int id1 = default(int);
-            var updateProject = new Project();
-            var updateProject1 = new Project();
+            var updateProject = new ProjectModel();
+            var updateProject1 = new ProjectModel();
 
             updateProject1.ProjectID = 1078900;
             updateProject1.ProjectName = "Update test project";

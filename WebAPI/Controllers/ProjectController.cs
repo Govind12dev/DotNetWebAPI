@@ -43,9 +43,9 @@ namespace WebAPI.Controllers
 
         // PUT: api/Project/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutProject(int id, Project project)
+        public IHttpActionResult PutProject(int id, ProjectModel projectModel)
         {
-            if (id != project.ProjectID)
+            if (id != projectModel.ProjectID)
             {
                 return BadRequest();
             }
@@ -54,9 +54,10 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-
+            var project = pm.Map(projectModel);
             db.Entry(project).State = EntityState.Modified;
             db.SaveChanges();
+            pm.UpdateUser(projectModel.UserID, project.ProjectID);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
